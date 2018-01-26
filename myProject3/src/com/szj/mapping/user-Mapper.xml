@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.szj.dao.UserDao">
+
+
+    <!-- 公共 User Map-->
+    <resultMap id="userMap" type="User">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickName"/>
+        <result column="photo" property="photo"/>
+        <result column="weixin" property="weiXin"/>
+        <result column="openid" property="openID"/>
+        <result column="tel" property="tel"/>
+        <result column="unionid" property="unionID"/>
+        <result column="token" property="token"/>
+        <result column="integral" property="integral"/>
+        <result column="money" property="money"/>
+        <result column="add_time" property="addTime"/>
+        <result column="is_worker" property="isWorker"/> <!--是否蓝鸽认证师傅  0否  1 是-->
+        <result column="inviter" property="inviter"/> <!-- 推荐人-->
+    </resultMap>
+
+    <select id="userData" parameterType="User" resultMap="userMap">
+        SELECT * FROM zb_user
+        limit #{start}, #{pageSize}
+    </select>
+
+
+</mapper>

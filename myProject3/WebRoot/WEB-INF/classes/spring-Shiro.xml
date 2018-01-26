@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroDbRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+
+    <!-- 項目自定义的Realm -->
+    <bean id="shiroDbRealm" class="com.szj.controller.ShiroRealm">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+
+        <!--当访问到某个地址，要求有认证，若无认证则弹到该配置界面-->
+
+
+<!--
+        <property name="loginUrl" value="/other/loginPage.jsp"/>
+-->
+
+        <!--当访问到某个地址，要求有权限或角色，若无 则弹到该配置界面-->
+
+
+<!--
+        <property name="unauthorizedUrl" value="/other/error.jsp"/>
+-->
+
+        <!--
+                过滤链的定义
+                语法：左边 地址或请求相对完整路径    右边：匹配规则
+                规则：关键字构成
+                     anon：不认证
+                     authc:认证
+                     roles[]
+                     perms[]
+                *  ：当前文件夹下的子文件，不含文件夹
+                ** ：当前文件下的所有文件
+
+                顺序性：规则是逐条匹配的，只要符合某一条，则不会往下判断
+        -->
+        <property name="filterChainDefinitions">
+            <value>
+            </value>
+        </property>
+    </bean>
+
+    <!-- 用户授权信息Cache -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+</beans>
